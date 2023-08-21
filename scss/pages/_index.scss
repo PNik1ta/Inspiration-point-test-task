@@ -26,6 +26,8 @@ $table-country-color: #888c95;
 			padding: 1.5rem 3rem;
 		}
 
+
+
 		&__company {
 			display: flex;
 			align-items: center;
@@ -54,6 +56,10 @@ $table-country-color: #888c95;
 			align-items: center;
 			margin: -1.5rem 0 -1.5rem 10rem;
 			color: $secondary-text-color;
+
+			@media screen and (max-width: 1064px) {
+				margin: -1.5rem 0 -1.5rem 6rem;
+			}
 
 			@include respond(tab) {
 				justify-content: center;
@@ -140,6 +146,7 @@ $table-country-color: #888c95;
 .wrapper {
 	display: grid;
 	grid-template-columns: 30% 1fr;
+	overflow: hidden;
 
 	@include respond(tab) {
 		grid-template-columns: 1fr;
@@ -359,6 +366,8 @@ $table-country-color: #888c95;
 	}
 
 	.main {
+		margin-bottom: 1.5rem;
+
 		&-header {
 			margin-top: 10rem;
 			&__title {
@@ -366,7 +375,11 @@ $table-country-color: #888c95;
 				color: $dark-blue;
 				font-weight: 700;
 				letter-spacing: 1.5rem;
-				white-space: nowrap;
+				white-space: wrap;
+
+				@media screen and (max-width: 1154px) {
+					font-size: 5rem;
+				}
 			}
 
 			&__tabs {
@@ -403,13 +416,13 @@ $table-country-color: #888c95;
 		}
 
 		.tables-desktop {
-			border-radius: 1rem;
-			background-color: $block-color;
-			padding: 2rem;
-			width: 100%;
-			height: fit-content;
+			display: flex;
+			flex-direction: column;
+			row-gap: 2rem;
+			
 			margin-top: 1.5rem;
 			overflow: auto;
+			transition: all .3s ease 0s;
 
 			@media screen and (max-width: 1440px) {
 				max-width: 85rem;		
@@ -423,13 +436,19 @@ $table-country-color: #888c95;
 				max-width: 70rem;		
 			}
 
-			// @include respond(tab) {
-			// 	display: none;
-			// }
+			@include respond(tab) {
+				display: none;
+			}
 
 			.table {
 				width: 100%;
 				overflow: auto;
+
+				border-radius: 1rem;
+				background-color: $block-color;
+				padding: 2rem;
+				width: 100%;
+				height: fit-content;
 
 				&-header {
 					display: flex;
@@ -542,6 +561,270 @@ $table-country-color: #888c95;
 							border-radius: 100%;
 							margin: 0 auto;
 						}
+					}
+				}
+			}
+		}
+
+		.tables-mobile {
+			margin-top: 1.5rem;
+			display: none;
+
+			@include respond(tab) {
+				display: flex;
+				flex-direction: column;
+				row-gap: 2rem;
+			}
+
+			.table {
+				background-color: $block-color;
+				padding: 2rem;
+				width: 100%;
+				height: fit-content;
+				border-radius: 1rem;
+
+				&-header {
+					display: flex;
+					flex-direction: column;
+					row-gap: 2rem;
+					&__row {
+						display: grid;
+						grid-template-columns: max-content 1fr;
+						align-items: end;
+						column-gap: 1.5rem;
+
+						h3 {
+							color: $table-text-color;
+							font-size: 2.5rem;
+						}
+
+						p {
+							color: $table-text-color;
+							font-size: 1.7rem;
+							line-height: 1.5;
+						}
+
+						&:last-child {
+							align-items: flex-start;
+						}
+					}
+				}
+
+				&-main {
+					width: 100%;
+					height: fit-content;
+					margin-top: 3rem;
+					
+					.navigation {
+						display: grid;
+						grid-template-columns: auto 1fr auto;
+						align-items: center;
+
+						&__prev, &__next {
+							border: solid $main-text-color;
+  							border-width: 0 .4rem .4rem 0;
+  							display: inline-block;
+  							padding: 1rem;
+							cursor: pointer;
+							background: transparent;
+						}
+
+						&__prev {
+							transform: rotate(135deg);
+						}
+
+						&__next {
+							transform: rotate(-45deg);
+						}
+
+						&__circles {
+							display: flex;
+							justify-content: center;
+							column-gap: 2rem;
+							align-items: center;
+						}
+
+						&__circle {
+							width: 1rem;
+							height: 1rem;
+							background-color: #1f1f1f;
+							border-radius: 100%;
+
+							&_active {
+								width: 1.5rem;
+								height: 1.5rem;
+								background-color: #fff;
+							}
+						}
+					}
+
+					.slider-container {
+						overflow: hidden; 
+						position: relative;
+					}
+
+					&__slides {
+						margin-top: 3rem;
+						display: flex;
+						width: 100%;
+						height: fit-content;
+						transition: all .3s ease-in-out 0s;
+					}
+
+					&__slide {
+						flex: 0 0 100%;
+						padding: 2rem;
+						box-sizing: border-box;
+						transition: all .3s ease-in-out 0s;
+						width: 10rem;
+						overflow: auto;
+
+						@media screen and (max-width: 500px) {
+							padding: 2rem 1rem;
+							white-space: nowrap;
+						}
+
+
+						.countries {
+							.country {
+								display: grid;
+								grid-template-columns: auto 1fr;
+								grid-template-rows: auto auto;
+								grid-template-areas: 
+								'number name'
+								'. flag';
+								column-gap: 2rem;
+								row-gap: 1rem;
+
+								border-top: .1rem solid $table-rows-color;
+								padding-top: .6rem;
+								padding-bottom: .5rem;
+								align-items: center;
+	
+								small {
+									grid-area: number;
+									color: $table-head-color;
+									font-size: 1.7rem;
+								}
+	
+								h5 {
+									grid-area: name;
+									font-size: 2.2rem;
+								}
+	
+								.flag {
+									grid-area: flag;
+									
+									display: flex;
+									align-items: center;
+									column-gap: 1rem;
+	
+									img { 
+										width: 3.2rem;
+										height: 2rem;
+										object-fit: cover;
+									}
+	
+									p {
+										font-size: 2.2rem;
+										color: $table-country-color;
+									}
+								}
+							}
+						}		
+
+						.table-competition-1 {
+							width: 100%;
+							margin-top: 1rem;
+							border-collapse: collapse;
+							height: fit-content;
+							min-width: 40rem;
+							
+
+							@media screen and (max-width: 600px) {
+								margin-top: 0.5rem;
+							}
+
+							@media screen and (max-width: 440px) {
+								margin-top: 0;
+							}
+
+							&__row {
+								position: relative;
+							}
+
+							&__head, &__number {
+								font-size: 1.5rem;
+								color: $table-head-color;
+								padding: .7rem 0;
+							}
+
+							&__number {
+								width: 1.5rem;
+							}
+
+							&__data {
+								font-size: 1.6rem;
+								color: $table-text-color;
+								padding: .7rem .2rem;
+								height: 6rem;
+								position: relative;
+								width: fit-content;
+
+								@media screen and (max-width: 475px) {
+									height: 7rem;
+								}
+
+								span {
+									position: absolute;
+									bottom: .8rem;
+  									left: 50%;
+  									transform: translateX(-50%);
+								}
+
+								&_green {
+									color: $table-green-text-color;
+								}
+
+								&_empty {
+									background-color: $header-background-mobile;
+								}
+
+
+								&.bordered {
+									border: 1px solid $table-rows-color;
+								}
+							}
+
+							&__name {
+								position: absolute;
+								top: .5rem;
+								left: 3%;
+								color: $main-text-color;
+								font-size: 2rem;
+
+								@media screen and (max-width: 600px) {
+									left: 5%;
+								}
+
+								@media screen and (max-width: 440px) {
+									left: 7%;
+									font-size: 1.7rem;
+									top: .7rem;
+								}
+							}
+	
+							.green-circle {
+								display: block;
+								width: 1.2rem;
+								height: 1.2rem;
+								background: rgb(16,255,0);
+								background: radial-gradient(circle, rgba(16,255,0,1) 78%, rgba(63,140,63,1) 100%);
+								border-radius: 100%;
+								margin: 0 auto;
+							}
+						}
+						
 					}
 				}
 			}
